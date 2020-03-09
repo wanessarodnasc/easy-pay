@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nubank.easypay.form.AccessDataForm;
 import com.nubank.easypay.model.Company;
 import com.nubank.easypay.service.PartnerCompanyRegisterService;
 
@@ -20,14 +19,14 @@ public class PartnerCompanyRegisterController {
 	private PartnerCompanyRegisterService service;
 		
 	@PostMapping("register-new-company")
-	public ResponseEntity<AccessDataForm> registerNewCompany(@RequestBody @Valid Company company) {
-		AccessDataForm accessData = service.registerNewCompany(company);
+	public ResponseEntity<String> registerNewCompany(@RequestBody @Valid Company company) {
+		String accessData = service.registerNewCompany(company);
 		return ResponseEntity.ok(accessData);
 	}
 	
 	@PutMapping("update-credentials")
-	public ResponseEntity<AccessDataForm> updateCredentials(@RequestBody @Valid Long companyId) {
-		AccessDataForm accessData = service.updateCredentials(companyId);
+	public ResponseEntity<String> updateCredentials(@RequestBody @Valid Long companyId) {
+		String accessData = service.updateCredentials(companyId);
 		return ResponseEntity.ok(accessData);
 	}
 

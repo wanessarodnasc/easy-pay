@@ -2,11 +2,14 @@ package com.nubank.easypay.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,10 +28,22 @@ public class Company implements Serializable {
 	@Column(name = "name", nullable = false)
 	private String name;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id")
 	private Address address;
 
 	@Column(name = "credentials", nullable = true)
 	private String credentials;
+
+	public Company() {
+	}
+
+	public Company(String code, String name, Address address, String credentials) {
+		this.code = code;
+		this.name = name;
+		this.address = address;
+		this.credentials = credentials;
+	}
 
 	public Long getId() {
 		return id;

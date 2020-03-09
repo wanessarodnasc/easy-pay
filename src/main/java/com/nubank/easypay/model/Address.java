@@ -33,6 +33,17 @@ public class Address implements Serializable {
 
 	@Column(name = "zipCode", nullable = false)
 	private String zipCode;
+	
+	public Address() {
+	}
+
+	public Address(int houseNumber, String streetAddress, String city, String state, String zipCode) {
+		this.houseNumber = houseNumber;
+		this.streetAddress = streetAddress;
+		this.city = city;
+		this.state = state;
+		this.zipCode = zipCode;
+	}
 
 	public int getHouseNumber() {
 		return houseNumber;

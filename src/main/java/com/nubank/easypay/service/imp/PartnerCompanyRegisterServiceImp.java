@@ -1,12 +1,16 @@
 package com.nubank.easypay.service.imp;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Optional;
 
-import com.nubank.easypay.form.AccessDataForm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.nubank.easypay.model.AccessData;
 import com.nubank.easypay.model.Company;
 import com.nubank.easypay.repository.CompanyRepository;
 import com.nubank.easypay.service.PartnerCompanyRegisterService;
 
+@Service
 public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterService {
 
 	@Autowired
@@ -16,16 +20,16 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 	private CompanyRepository companyRepository;
 	
 	@Override
-	public AccessDataForm registerNewCompany(Company company) {
-		AccessDataForm accessData = generateCredentials.generateAccessCredentials(company.getCode());
-		saveCompany(company, accessData);
-		return accessData;
+	public String registerNewCompany(Company company) {
+		AccessData accessData = generateCredentials.generateAccessCredentials(company.getCode());
+		return saveCompany(company, accessData);
 	}
 	
 	@Override
-	public AccessDataForm updateCredentials(Long companyId) {
-		// TODO Auto-generated method stub
-		return null;
+	public String updateCredentials(Long companyId) {
+		Optional<Company> company = companyRepository.findById(companyId);
+		AccessData accessData = generateCredentials.generateAccessCredentials(company.get().getCode());
+		return saveCompany(company.get(), accessData);
 	}
 
 	@Override
@@ -38,13 +42,16 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 		return null;
 	}
 
-	private void saveCompany(Company company, AccessDataForm accessData) {
-		company.setCredentials(criptografyCredentials(accessData));
-		companyRepository.save(company);
-	}
-	
-	private String criptografyCredentials(AccessDataForm accessData) {
-		// TODO Faca criptografia aqui
-		return null;
+	private String saveCompany(Company company, AccessData accessData) {
+		try {
+			company.setCredentials(accessData.getLogin().concat(":").concat(accessData.getPassword()));
+			Company companySaved  = companyRepository.save(company);
+			if(companySaved == null) {
+				return "Company saved";
+			}
+		} catch (Exception e) {
+			return "Was not possible save the company";
+		}
+		return "Was not possible save the company";
 	}
 }

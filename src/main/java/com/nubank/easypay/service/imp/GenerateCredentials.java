@@ -1,12 +1,21 @@
 package com.nubank.easypay.service.imp;
 
-import com.nubank.easypay.form.AccessDataForm;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
+import com.nubank.easypay.model.AccessData;
+
+@Service
 public class GenerateCredentials {
-
-	public AccessDataForm generateAccessCredentials(String cnpj) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public AccessData generateAccessCredentials(String cnpj) {
+		return new AccessData(cnpj, generateRandomPassword());
 	}
-
+	
+	private String generateRandomPassword() {
+		String password = RandomStringUtils.randomAscii(10, 25);
+		//Enviar email 
+		return new BCryptPasswordEncoder().encode(password);
+	}
 }
