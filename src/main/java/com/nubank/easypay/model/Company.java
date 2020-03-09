@@ -1,18 +1,22 @@
 package com.nubank.easypay.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
-public class Company {
+@Table(name = "company")
+public class Company implements Serializable {
+
+	private static final long serialVersionUID = -3720729525176684696L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "address_seq_gen")
-	@SequenceGenerator(name = "address_seq_gen", sequenceName = "ADDRESS_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@Column(name = "code", nullable = false)
@@ -20,11 +24,12 @@ public class Company {
 
 	@Column(name = "name", nullable = false)
 	private String name;
-	
+
 	private Address address;
-	
+
+	@Column(name = "credentials", nullable = true)
 	private String credentials;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -63,5 +68,5 @@ public class Company {
 
 	public void setCredentials(String credentials) {
 		this.credentials = credentials;
-	} 
+	}
 }
