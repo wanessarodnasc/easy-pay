@@ -10,12 +10,13 @@ import com.nubank.easypay.model.AccessData;
 public class GenerateCredentials {
 	
 	public AccessData generateAccessCredentials(String cnpj) {
-		return new AccessData(cnpj, generateRandomPassword());
+		return new AccessData(cnpj, generateRandomPassword(cnpj));
 	}
 	
-	private String generateRandomPassword() {
+	private String generateRandomPassword(String cnpj) {
 		String password = RandomStringUtils.randomAscii(10, 25);
 		//Enviar email 
+		System.out.println(cnpj + ":" + password);
 		return new BCryptPasswordEncoder().encode(password);
 	}
 }

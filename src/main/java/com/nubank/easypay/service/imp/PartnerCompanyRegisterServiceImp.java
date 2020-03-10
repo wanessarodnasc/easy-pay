@@ -33,18 +33,40 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 	}
 
 	@Override
-	public String registerUpdateCompany(Long companyId) {
-		return null;
+	public String registerUpdateCompany(Company company) {
+		try {
+			Optional<Company> oldCompany = companyRepository.findById(company.getId());
+			if(oldCompany.isPresent()) {
+				companyRepository.saveAndFlush(company);
+				return "OK";
+			}
+			
+		} catch (Exception e) {
+			return "Was not possible save the company";
+		}
+		return "Was not possible save the company"; 
 	}
 
 	@Override
 	public String deleteCompany(Long companyId) {
-		return null;
+		try {
+			Optional<Company> company = companyRepository.findById(companyId);
+			if(company.isPresent()) {
+				company.get().setStatus(false);
+				companyRepository.saveAndFlush(company.get());
+				return "OK";
+			}
+			
+		} catch (Exception e) {
+			return "Company not found";
+		}
+		return "Was not possible save the company"; 
 	}
 
 	private String saveCompany(Company company, AccessData accessData) {
 		try {
 			company.setCredentials(accessData.getLogin().concat(":").concat(accessData.getPassword()));
+			company.setStatus(true);
 			Company companySaved  = companyRepository.save(company);
 			if(companySaved == null) {
 				return "Company saved";

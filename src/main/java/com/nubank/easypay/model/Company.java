@@ -34,6 +34,10 @@ public class Company implements Serializable {
 
 	@Column(name = "credentials", nullable = true)
 	private String credentials;
+	
+	@Column(name = "status", nullable = false)
+	private boolean status;
+	
 
 	public Company() {
 	}
@@ -83,5 +87,13 @@ public class Company implements Serializable {
 
 	public void setCredentials(String credentials) {
 		this.credentials = credentials;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 }

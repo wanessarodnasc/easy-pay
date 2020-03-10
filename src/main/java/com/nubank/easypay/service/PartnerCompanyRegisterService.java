@@ -6,7 +6,7 @@ public interface PartnerCompanyRegisterService {
 
 	String registerNewCompany(Company company);
 
-	String registerUpdateCompany(Long companyId);
+	String registerUpdateCompany(Company company);
 
 	String updateCredentials(Long companyId);
 

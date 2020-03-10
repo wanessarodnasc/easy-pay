@@ -31,8 +31,8 @@ public class PartnerCompanyRegisterController {
 	}
 
 	@PutMapping("register-update-company")
-	public ResponseEntity<String> registerUpdateCompany(@RequestBody @Valid Long companyId) {
-		String updated = service.registerUpdateCompany(companyId);
+	public ResponseEntity<String> registerUpdateCompany(@RequestBody @Valid Company company) {
+		String updated = service.registerUpdateCompany(company);
 		return ResponseEntity.ok(updated);
 	}
 	
