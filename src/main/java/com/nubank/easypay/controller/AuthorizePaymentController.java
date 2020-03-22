@@ -17,8 +17,8 @@ public class AuthorizePaymentController {
 	private AuthorizePaymentService service;
 	
 	@GetMapping("authorize-payment")
-    public ResponseEntity<Boolean> authorizePayment(@Valid @RequestParam String cpf)  {
-		boolean autorized = service.autorizePayment(cpf);
+    public ResponseEntity<String> authorizePayment(@Valid @RequestParam String cpf)  {
+		String autorized = service.autorizePayment(cpf);
     	return ResponseEntity.ok().body(autorized);
     }
 }
