@@ -1,7 +1,6 @@
 package com.nubank.easypay.service.imp;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nubank.easypay.model.AccessData;
@@ -16,7 +15,6 @@ public class GenerateCredentials {
 	private String generateRandomPassword(String cnpj) {
 		String password = RandomStringUtils.randomAscii(10, 25);
 		//Enviar email 
-		System.out.println(cnpj + ":" + password);
-		return new BCryptPasswordEncoder().encode(password);
+		return password;//new BCryptPasswordEncoder().encode(password);
 	}
 }

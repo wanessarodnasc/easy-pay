@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nubank.easypay.model.Company;
@@ -17,7 +18,7 @@ public class PartnerCompanyRegisterController {
 	
 	@Autowired
 	private PartnerCompanyRegisterService service;
-		
+	
 	@PostMapping("register-new-company")
 	public ResponseEntity<String> registerNewCompany(@RequestBody @Valid Company company) {
 		String accessData = service.registerNewCompany(company);
@@ -25,7 +26,7 @@ public class PartnerCompanyRegisterController {
 	}
 	
 	@PutMapping("update-credentials")
-	public ResponseEntity<String> updateCredentials(@RequestBody @Valid Long companyId) {
+	public ResponseEntity<String> updateCredentials(@RequestParam @Valid Long companyId) {
 		String accessData = service.updateCredentials(companyId);
 		return ResponseEntity.ok(accessData);
 	}

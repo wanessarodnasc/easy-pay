@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.nubank.easypay.model.Company;
 
 @Repository
-public interface CompanyRepository  extends JpaRepository<Company, Long> {
+public interface CompanyRepository extends JpaRepository<Company, Long> {
 
+	Company findByCode(String code);
 
 }

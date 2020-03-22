@@ -4,11 +4,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.nubank.easypay.model.AccessData;
 import com.nubank.easypay.model.Company;
 import com.nubank.easypay.repository.CompanyRepository;
 import com.nubank.easypay.service.PartnerCompanyRegisterService;
+
 
 @Service
 public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterService {
@@ -21,6 +23,10 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 	
 	@Override
 	public String registerNewCompany(Company company) {
+		Company companyExist = companyRepository.findByCode(company.getCode());
+		if(!StringUtils.isEmpty(companyExist)) {
+			return "Company alredy registered.";
+		}
 		AccessData accessData = generateCredentials.generateAccessCredentials(company.getCode());
 		return saveCompany(company, accessData);
 	}
@@ -35,10 +41,10 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 	@Override
 	public String registerUpdateCompany(Company company) {
 		try {
-			Optional<Company> oldCompany = companyRepository.findById(company.getId());
-			if(oldCompany.isPresent()) {
+			Company companyExist = companyRepository.findByCode(company.getCode());
+			if(!StringUtils.isEmpty(companyExist)) {
 				companyRepository.saveAndFlush(company);
-				return "OK";
+				return "Company updated.";
 			}
 			
 		} catch (Exception e) {
@@ -54,13 +60,13 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 			if(company.isPresent()) {
 				company.get().setStatus(false);
 				companyRepository.saveAndFlush(company.get());
-				return "OK";
+				return "Company deleted sucessufully.";
 			}
 			
 		} catch (Exception e) {
 			return "Company not found";
 		}
-		return "Was not possible save the company"; 
+		return "Was not possible delete the company"; 
 	}
 
 	private String saveCompany(Company company, AccessData accessData) {
@@ -68,12 +74,12 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 			company.setCredentials(accessData.getLogin().concat(":").concat(accessData.getPassword()));
 			company.setStatus(true);
 			Company companySaved  = companyRepository.save(company);
-			if(companySaved == null) {
-				return "Company saved";
+			if(companySaved != null) {
+				return "Company saved/updated";
 			}
 		} catch (Exception e) {
-			return "Was not possible save the company";
+			return "Was not possible save/updated the company";
 		}
-		return "Was not possible save the company";
+		return "Was not possible save/updated the company";
 	}
 }

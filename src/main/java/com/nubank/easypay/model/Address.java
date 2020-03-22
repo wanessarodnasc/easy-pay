@@ -19,11 +19,11 @@ public class Address implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "houseNumber", nullable = false)
-	private int houseNumber;
-
 	@Column(name = "streetAddress", nullable = false)
 	private String streetAddress;
+
+	@Column(name = "houseNumber", nullable = false)
+	private int houseNumber;
 
 	@Column(name = "city", nullable = false)
 	private String city;
@@ -33,6 +33,9 @@ public class Address implements Serializable {
 
 	@Column(name = "zipCode", nullable = false)
 	private String zipCode;
+	
+	@Column(name = "country", nullable = false)
+	private String country;
 	
 	public Address() {
 	}
@@ -83,5 +86,13 @@ public class Address implements Serializable {
 
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 }
