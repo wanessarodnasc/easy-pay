@@ -31,7 +31,7 @@ public class Company implements Serializable {
 	@Column(name = "name", nullable = false, updatable = false)
 	private String name;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "address_id")
 	private Address address;
 
@@ -50,6 +50,7 @@ public class Company implements Serializable {
 		this.name = name;
 		this.address = address;
 		this.credentials = credentials;
+		this.status = true;
 	}
 
 	public Company(CompanyInsertForm company) {

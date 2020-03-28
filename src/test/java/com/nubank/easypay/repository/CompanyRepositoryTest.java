@@ -2,6 +2,8 @@ package com.nubank.easypay.repository;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,13 @@ public class CompanyRepositoryTest {
 		Company company = new Company("Test", "Test", getAddress(), "teste:1234");
         repository.save(company);
         assertNotNull(repository.findAll());
+    }
+	
+	@Test
+    public void findByCode() {
+		Company company = new Company("Test", "Test", getAddress(), "teste:1234");
+		Optional<Company> companyFound = repository.findByCode(repository.save(company).getCode()) ;
+        assertNotNull(companyFound.get());
     }
 
 	private Address getAddress() {

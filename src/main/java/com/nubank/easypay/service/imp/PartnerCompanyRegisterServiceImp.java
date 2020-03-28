@@ -78,7 +78,7 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 			company.setStatus(true);
 			Company companySaved  = companyRepository.save(company);
 			if(companySaved != null) {
-				return "Company saved/updated";
+				return "Company saved/updated.";
 			}
 		} catch (Exception e) {
 			return "Was not possible save/updated the company";

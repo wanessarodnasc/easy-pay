@@ -29,32 +29,32 @@ public class PartnerCompanyRegisterServiceTest {
 
 	@Test
 	public void registerNewCompany() throws Exception {
-		String accessData = service.registerNewCompany(new CompanyInsertForm("Test", "Test", getAddress()));
+		String accessData = service.registerNewCompany(new CompanyInsertForm("00.000.000/0001-00", "Test 1", getAddress()));
 		assertNotNull(accessData);
 	}
 	
 	@Test
 	public void registerUpdateCompany() throws Exception {
-		Company company = repository.save(new Company("Test", "Test", getAddress(), "teste:1234"));
-		company.setName("Test 2");
+		Company company = repository.save(new Company("00.000.000/0001-01", "Test 2", getAddress(), "teste:1234"));
+		company.getAddress().setStreetAddress("New Address");
 		String msg = service.registerUpdateCompany(new CompanyUpdateForm(company));
-		assertEquals(msg, "OK");
+		assertEquals(msg, "Company updated.");
 		Optional<Company> companySaved = repository.findById(company.getId());
-		assertEquals(companySaved.get().getName(), "Test 2");
+		assertEquals(companySaved.get().getAddress().getStreetAddress(), "New Address");
 	}
 	
 	@Test
 	public void updateCredentials() throws Exception {
-		Company company = repository.save(new Company("Test", "Test", getAddress(), "teste:1234"));
+		Company company = repository.save(new Company("00.000.000/0001-02", "Test 2", getAddress(), "teste:1234"));
 		String accessData = service.updateCredentials(company.getCode());
 		assertNotNull(accessData);
 	}
 	
 	@Test
 	public void deleteCompany() throws Exception {
-		Company company = repository.save(new Company("Test", "Test", getAddress(), "teste:1234"));
+		Company company = repository.save(new Company("00.000.000/0001-03", "Test 3", getAddress(), "teste:1234"));
 		String msg = service.deleteCompany(company.getCode());
-		assertEquals(msg, "OK");
+		assertEquals(msg, "Company deleted sucessufully.");
 	}
 
 	private Address getAddress() {
