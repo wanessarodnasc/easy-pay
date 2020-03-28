@@ -21,7 +21,7 @@ public class ProcessPaymentClientImp implements ProcessPaymentClient{
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	@Value("${service.custumer.information}")
+	@Value("${service.process.payment}")
 	private String url;
 	
 	@Value("${service.variable.cpf}")

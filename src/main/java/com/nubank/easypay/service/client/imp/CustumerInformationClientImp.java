@@ -16,22 +16,22 @@ import com.nubank.easypay.service.client.CustumerInformationClient;
 
 @Service
 public class CustumerInformationClientImp implements CustumerInformationClient {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(CustumerInformationClientImp.class);
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
-	
-	@Value("${service.process.payment}")
-	private String url;
-	
+
+	@Value("${search.custumer}")
+	private String urlSearch;
+
 	@Value("${service.variable.cpf}")
 	private String cpfVariable;
-	
+
 	@Override
 	public Custumer searchCustumerByCpf(String cpf) {
-		UriComponents uri = UriComponentsBuilder.fromUriString(url).queryParam(cpfVariable, cpf).build();
-		LOGGER.info(MessageFormat.format("Calling web service custumer information: {0}", uri));
+		UriComponents uri = UriComponentsBuilder.fromUriString(urlSearch).queryParam(cpfVariable, cpf).build();
+		LOGGER.info(MessageFormat.format("Calling web service custumer information - search by cpf : {0}", uri));
 		return restTemplate.getForObject(uri.toUriString(), Custumer.class);
 	}
 }

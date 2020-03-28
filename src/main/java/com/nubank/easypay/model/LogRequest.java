@@ -21,7 +21,10 @@ public class LogRequest implements Serializable {
 	private Long id;
 	
 	@Column(name = "custumer_cpf")
-	private String custumer;
+	private String custumerCpf;
+	
+	@Column(name = "company_code")
+	private String companyCode;
 	
 	@Column(name = "status", nullable = false)
 	private String status;
@@ -31,13 +34,28 @@ public class LogRequest implements Serializable {
 	
 	public LogRequest() {
 	}
-
-	public String getCustumer() {
-		return custumer;
+	
+	public LogRequest(String custumerCpf, String companyCode, String status, LocalDateTime dataTime) {
+		this.custumerCpf = custumerCpf;
+		this.companyCode = companyCode;
+		this.status = status;
+		this.dataTime = dataTime;
 	}
 
-	public void setCustumer(String custumer) {
-		this.custumer = custumer;
+	public String getCustumerCpf() {
+		return custumerCpf;
+	}
+
+	public void setCustumerCpf(String custumerCpf) {
+		this.custumerCpf = custumerCpf;
+	}
+
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 
 	public String getStatus() {
@@ -62,6 +80,7 @@ public class LogRequest implements Serializable {
 
 	@Override
 	public String toString() {
-		return "LogRequest [custumer=" + custumer + ", status=" + status + ", dataTime=" + dataTime + "]";
+		return "LogRequest [custumerCpf=" + custumerCpf + ", companyCode=" + companyCode + ", status=" + status
+				+ ", dataTime=" + dataTime + "]";
 	}
 }

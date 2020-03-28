@@ -18,7 +18,9 @@ public class AuthorizePaymentController {
 	
 	@GetMapping("authorize-payment")
     public ResponseEntity<String> authorizePayment(@Valid @RequestParam String cpf)  {
-		String autorized = service.autorizePayment(cpf);
+		//get login compnay 
+		String companyCode = "00.000.000/0001-00";
+		String autorized = service.autorizePayment(cpf, companyCode);
     	return ResponseEntity.ok().body(autorized);
     }
 }

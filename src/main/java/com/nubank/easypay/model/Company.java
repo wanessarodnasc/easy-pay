@@ -99,7 +99,7 @@ public class Company implements Serializable {
 		this.credentials = credentials;
 	}
 
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 

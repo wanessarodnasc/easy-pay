@@ -1,6 +1,5 @@
 package com.nubank.easypay.service;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Optional;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.nubank.easypay.enumeration.RegisterEnum;
 import com.nubank.easypay.form.CompanyInsertForm;
 import com.nubank.easypay.form.CompanyUpdateForm;
 import com.nubank.easypay.model.Address;
@@ -29,8 +29,8 @@ public class PartnerCompanyRegisterServiceTest {
 
 	@Test
 	public void registerNewCompany() throws Exception {
-		String accessData = service.registerNewCompany(new CompanyInsertForm("00.000.000/0001-00", "Test 1", getAddress()));
-		assertNotNull(accessData);
+		String msg = service.registerNewCompany(new CompanyInsertForm("00.000.000/0001-00", "Test 1", getAddress()));
+		assertEquals(msg, RegisterEnum.SAVED.getDescription());
 	}
 	
 	@Test
@@ -38,7 +38,7 @@ public class PartnerCompanyRegisterServiceTest {
 		Company company = repository.save(new Company("00.000.000/0001-01", "Test 2", getAddress(), "teste:1234"));
 		company.getAddress().setStreetAddress("New Address");
 		String msg = service.registerUpdateCompany(new CompanyUpdateForm(company));
-		assertEquals(msg, "Company updated.");
+		assertEquals(msg, RegisterEnum.UPDATED.getDescription());
 		Optional<Company> companySaved = repository.findById(company.getId());
 		assertEquals(companySaved.get().getAddress().getStreetAddress(), "New Address");
 	}
@@ -46,15 +46,15 @@ public class PartnerCompanyRegisterServiceTest {
 	@Test
 	public void updateCredentials() throws Exception {
 		Company company = repository.save(new Company("00.000.000/0001-02", "Test 2", getAddress(), "teste:1234"));
-		String accessData = service.updateCredentials(company.getCode());
-		assertNotNull(accessData);
+		String msg = service.updateCredentials(company.getCode());
+		assertEquals(msg, RegisterEnum.SAVED.getDescription());
 	}
 	
 	@Test
 	public void deleteCompany() throws Exception {
 		Company company = repository.save(new Company("00.000.000/0001-03", "Test 3", getAddress(), "teste:1234"));
 		String msg = service.deleteCompany(company.getCode());
-		assertEquals(msg, "Company deleted sucessufully.");
+		assertEquals(msg, RegisterEnum.DELETED.getDescription());
 	}
 
 	private Address getAddress() {
