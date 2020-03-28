@@ -6,10 +6,12 @@ public class AccessData {
 	
 	private String password;
 	
-	
 	public AccessData(String login, String password) {
 		this.login = login;
 		this.password = password;
+	}
+	
+	public AccessData() {
 	}
 
 	public String getLogin() {

@@ -1,5 +1,6 @@
 package com.nubank.easypay.form;
 
+
 public class Custumer {
 	
 	private String cpf;

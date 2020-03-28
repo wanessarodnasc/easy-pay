@@ -34,6 +34,6 @@ public class CompanyRepositoryTest {
     }
 
 	private Address getAddress() {
-		return new Address(12, "streetAddress", "city", "state","zipCode");
+		return new Address(12, "streetAddress", "city", "state","zipCode", "Brasil");
 	}
 }

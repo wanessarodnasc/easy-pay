@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.nubank.easypay.form.CompanyInsertForm;
+
 @Entity
 @Table(name = "company")
 public class Company implements Serializable {
@@ -48,6 +50,12 @@ public class Company implements Serializable {
 		this.name = name;
 		this.address = address;
 		this.credentials = credentials;
+	}
+
+	public Company(CompanyInsertForm company) {
+		this.code = company.getCode();
+		this.name = company.getName();
+		this.address = new Address(company.getAddress());
 	}
 
 	public Long getId() {

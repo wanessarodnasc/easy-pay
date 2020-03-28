@@ -12,6 +12,9 @@ public class AccessDataForm {
 		this.login = accessData.getLogin();
 		this.password = accessData.getPassword();
 	}
+	
+	public AccessDataForm() {
+	}
 
 	public String getLogin() {
 		return login;
@@ -28,7 +31,4 @@ public class AccessDataForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	
 }

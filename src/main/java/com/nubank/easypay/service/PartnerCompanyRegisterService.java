@@ -1,15 +1,16 @@
 package com.nubank.easypay.service;
 
-import com.nubank.easypay.model.Company;
+import com.nubank.easypay.form.CompanyInsertForm;
+import com.nubank.easypay.form.CompanyUpdateForm;
 
 public interface PartnerCompanyRegisterService {
 
-	String registerNewCompany(Company company);
+	String registerNewCompany(CompanyInsertForm company);
 
-	String registerUpdateCompany(Company company);
+	String registerUpdateCompany(CompanyUpdateForm company);
 
-	String updateCredentials(Long companyId);
+	String updateCredentials(String companyCode);
 
-	String deleteCompany(Long companyId);
+	String deleteCompany(String companyCode);
 
 }

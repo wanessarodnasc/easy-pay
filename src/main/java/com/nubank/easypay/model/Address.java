@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.nubank.easypay.form.AddressForm;
+
 @Entity
 @Table(name = "address")
 public class Address implements Serializable {
@@ -40,14 +42,24 @@ public class Address implements Serializable {
 	public Address() {
 	}
 
-	public Address(int houseNumber, String streetAddress, String city, String state, String zipCode) {
+	public Address(int houseNumber, String streetAddress, String city, String state, String zipCode, String country) {
 		this.houseNumber = houseNumber;
 		this.streetAddress = streetAddress;
 		this.city = city;
 		this.state = state;
 		this.zipCode = zipCode;
+		this.country = country;
 	}
 
+	public Address(AddressForm address) {
+		this.houseNumber = address.getHouseNumber();
+		this.streetAddress = address.getStreetAddress();
+		this.city = address.getCity();
+		this.state = address.getState();
+		this.zipCode = address.getZipCode();
+		this.country = address.getCountry();
+	}
+	
 	public int getHouseNumber() {
 		return houseNumber;
 	}

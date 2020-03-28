@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.nubank.easypay.form.CompanyInsertForm;
+import com.nubank.easypay.form.CompanyUpdateForm;
 import com.nubank.easypay.model.Address;
 import com.nubank.easypay.model.Company;
 import com.nubank.easypay.repository.CompanyRepository;
@@ -27,7 +29,7 @@ public class PartnerCompanyRegisterServiceTest {
 
 	@Test
 	public void registerNewCompany() throws Exception {
-		String accessData = service.registerNewCompany(new Company("Test", "Test", getAddress(), "teste:1234"));
+		String accessData = service.registerNewCompany(new CompanyInsertForm("Test", "Test", getAddress()));
 		assertNotNull(accessData);
 	}
 	
@@ -35,7 +37,7 @@ public class PartnerCompanyRegisterServiceTest {
 	public void registerUpdateCompany() throws Exception {
 		Company company = repository.save(new Company("Test", "Test", getAddress(), "teste:1234"));
 		company.setName("Test 2");
-		String msg = service.registerUpdateCompany(company);
+		String msg = service.registerUpdateCompany(new CompanyUpdateForm(company));
 		assertEquals(msg, "OK");
 		Optional<Company> companySaved = repository.findById(company.getId());
 		assertEquals(companySaved.get().getName(), "Test 2");
@@ -44,18 +46,18 @@ public class PartnerCompanyRegisterServiceTest {
 	@Test
 	public void updateCredentials() throws Exception {
 		Company company = repository.save(new Company("Test", "Test", getAddress(), "teste:1234"));
-		String accessData = service.updateCredentials(company.getId());
+		String accessData = service.updateCredentials(company.getCode());
 		assertNotNull(accessData);
 	}
 	
 	@Test
 	public void deleteCompany() throws Exception {
 		Company company = repository.save(new Company("Test", "Test", getAddress(), "teste:1234"));
-		String msg = service.deleteCompany(company.getId());
+		String msg = service.deleteCompany(company.getCode());
 		assertEquals(msg, "OK");
 	}
 
 	private Address getAddress() {
-		return new Address(12, "streetAddress", "city", "state", "zipCode");
+		return new Address(12, "streetAddress", "city", "state", "zipCode", "Brasil");
 	}
 }
