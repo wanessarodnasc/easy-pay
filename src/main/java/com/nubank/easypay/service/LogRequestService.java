@@ -1,7 +1,11 @@
 package com.nubank.easypay.service;
 
+import com.nubank.easypay.model.LogRequest;
+
 public interface LogRequestService {
 	
-	void saveLogInformation(String cpf, String companyCode, String paymentStatus);
+	LogRequest saveLogInformationStart(LogRequest log);
+
+	LogRequest updateLogFinishProcess(LogRequest log, String status);
 
 }

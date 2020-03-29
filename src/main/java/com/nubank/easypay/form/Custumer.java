@@ -7,11 +7,7 @@ public class Custumer {
 	
 	private String completeName;
 	
-	private String cardNumber;
-	
-	private String expiredDate;
-	
-	private String code; 
+	private CardDataForm cardData;
 	
 	private Boolean isAvaliableToCpfPayment;
 
@@ -31,28 +27,12 @@ public class Custumer {
 		this.completeName = completeName;
 	}
 
-	public String getCardNumber() {
-		return cardNumber;
+	public CardDataForm getCardData() {
+		return cardData;
 	}
 
-	public void setCardNumber(String cardNumber) {
-		this.cardNumber = cardNumber;
-	}
-
-	public String getExpiredDate() {
-		return expiredDate;
-	}
-
-	public void setExpiredDate(String expiredDate) {
-		this.expiredDate = expiredDate;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
+	public void setCardData(CardDataForm cardData) {
+		this.cardData = cardData;
 	}
 
 	public Boolean getIsAvaliableToCpfPayment() {
@@ -62,4 +42,5 @@ public class Custumer {
 	public void setIsAvaliableToCpfPayment(Boolean isAvaliableToCpfPayment) {
 		this.isAvaliableToCpfPayment = isAvaliableToCpfPayment;
 	}
+	
 }

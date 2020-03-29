@@ -48,9 +48,8 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 				return RegisterEnum.DOES_NOT_FOUND.getDescription();
 			}
 			companyExist.get().setAddress(new Address(company.getAddress()));
-			companyRepository.saveAndFlush(companyExist.get());
+			companyRepository.save(companyExist.get());
 			return RegisterEnum.UPDATED.getDescription();
-
 		} catch (Exception e) {
 			return RegisterEnum.SAVE_UPDATE_ERROR.getDescription();
 		}

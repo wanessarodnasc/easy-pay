@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.nubank.easypay.enumeration.AuthorizePaymentEnum;
 import com.nubank.easypay.form.Custumer;
+import com.nubank.easypay.form.PaymentForm;
+import com.nubank.easypay.form.PaymentRequestForm;
 import com.nubank.easypay.model.Company;
+import com.nubank.easypay.model.LogRequest;
 import com.nubank.easypay.repository.CompanyRepository;
 import com.nubank.easypay.service.AuthorizePaymentService;
 import com.nubank.easypay.service.LogRequestService;
@@ -30,28 +33,42 @@ public class AuthorizePaymentServiceImp implements AuthorizePaymentService{
 	private LogRequestService logRequestService;
 	
 	@Override
-	public String autorizePayment(String cpf, String companyCode) {
-		
-		Optional<Company> company = companyRepository.findByCode(companyCode);
-		if(!company.isPresent() || company.get().getStatus()) {
+	public String autorizePayment(PaymentForm payment) {
+		LogRequest log = logRequestService.saveLogInformationStart(new LogRequest(payment.getCpf(), payment.getCompanyCode()));
+		String status = validatePayment(payment); 
+		logRequestService.updateLogFinishProcess(log, status);
+		return status;
+	}
+	
+	private String validatePayment(PaymentForm payment) {
+		Optional<Company> company = companyRepository.findByCode(payment.getCompanyCode());
+		if(!company.isPresent() || company.get().getStatus() == false) {
 			return AuthorizePaymentEnum.INACTIVE_COMPANY.getDescription();
 		}
-		String paymentStatus = processPayment(cpf);
-		logRequestService.saveLogInformation(cpf, companyCode, paymentStatus);
-		return paymentStatus;
+		Custumer custumer = custumerInfomation.searchCustumerByCpf(payment.getCpf());
+		if( custumer == null) {
+			return AuthorizePaymentEnum.CUSTUMER_DOES_NOT_EXIST.getDescription();
+		}
+		if( custumer.getIsAvaliableToCpfPayment() == false) {
+			return AuthorizePaymentEnum.PAYMENT_CPF_DISABLED.getDescription();
+		}
+		return processPayment(custumer, payment); 
 	}
 
-	private String processPayment(String cpf) {
-		String paymentStatus;
+	private String processPayment(Custumer custumer, PaymentForm payment) {
+		PaymentRequestForm form = createPaymentRequestForm(custumer, payment);
 		try {
-			Custumer custumer = custumerInfomation.searchCustumerByCpf(cpf);
-			if( custumer.getIsAvaliableToCpfPayment() == false) {
-				return AuthorizePaymentEnum.PAYMENT_CPF_DISABLED.getDescription();
-			}
-			paymentStatus = processPayment.processPayment(cpf);
+			return processPayment.processPayment(form);
 		} catch (Exception e) {
 			return AuthorizePaymentEnum.PROCESSING_ERROR.getDescription();
 		}
-		return paymentStatus;
+	}
+
+	private PaymentRequestForm createPaymentRequestForm(Custumer custumer, PaymentForm payment) {
+		return new PaymentRequestForm(custumer.getCompleteName(), 
+				custumer.getCpf(),
+				custumer.getCardData(), 
+				payment.getInstallment(), 
+				payment.getValue());
 	}
 }

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 
 import com.nubank.easypay.form.CompanyInsertForm;
 
@@ -35,6 +36,10 @@ public class Company implements Serializable {
 	@JoinColumn(name = "address_id")
 	private Address address;
 
+	@Email
+	@Column(name = "email", nullable = true)
+	private String email;
+
 	@Column(name = "credentials", nullable = true)
 	private String credentials;
 	
@@ -45,9 +50,10 @@ public class Company implements Serializable {
 	public Company() {
 	}
 
-	public Company(String code, String name, Address address, String credentials) {
+	public Company(String code, String name, String email, Address address, String credentials) {
 		this.code = code;
 		this.name = name;
+		this.email = email;
 		this.address = address;
 		this.credentials = credentials;
 		this.status = true;
@@ -56,6 +62,7 @@ public class Company implements Serializable {
 	public Company(CompanyInsertForm company) {
 		this.code = company.getCode();
 		this.name = company.getName();
+		this.email = company.getEmail();
 		this.address = new Address(company.getAddress());
 	}
 
@@ -105,5 +112,13 @@ public class Company implements Serializable {
 
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

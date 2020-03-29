@@ -1,7 +1,9 @@
 package com.nubank.easypay.service.client;
 
+import com.nubank.easypay.form.PaymentRequestForm;
+
 public interface ProcessPaymentClient {
 	
-	String processPayment(String cpf);
+	String processPayment(PaymentRequestForm payment);
 
 }

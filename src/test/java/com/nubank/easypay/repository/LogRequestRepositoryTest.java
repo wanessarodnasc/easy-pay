@@ -32,21 +32,21 @@ public class LogRequestRepositoryTest {
 	
 	@Test
 	public void searchByCpf() throws Exception {
-		repository.save(new LogRequest("35177355221", "00.000.000/0001-00", "APPROVED", LocalDateTime.now()));
+		repository.save(new LogRequest("35177355221", "00.000.000/0001-00", "APPROVED", LocalDateTime.now(), LocalDateTime.now()));
 		Optional<List<LogRequest>> logsRequest = repository.findByCustumerCpf("35177355221");
 		assertTrue(logsRequest.isPresent());
 	}
 	
 	@Test
 	public void searchByCompanyCode() throws Exception {
-		repository.save(new LogRequest("35177355221", "00.000.000/0001-00", "APPROVED", LocalDateTime.now()));
+		repository.save(new LogRequest("35177355221", "00.000.000/0001-00", "APPROVED", LocalDateTime.now(), LocalDateTime.now()));
 		Optional<List<LogRequest>> logsRequest = repository.findByCompanyCode("00.000.000/0001-00");
 		assertNotNull(logsRequest);
 	}
 	
 	@Test
 	public void searchByStatus() throws Exception {
-		repository.save(new LogRequest("35177355221", "00.000.000/0001-00", "APPROVED", LocalDateTime.now()));
+		repository.save(new LogRequest("35177355221", "00.000.000/0001-00", "APPROVED", LocalDateTime.now(), LocalDateTime.now()));
 		Optional<List<LogRequest>> logsRequest = repository.findByStatus("APPROVED");
 		assertNotNull(logsRequest);
 	}

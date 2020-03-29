@@ -1,19 +1,26 @@
 package com.nubank.easypay.form;
 
 import com.nubank.easypay.model.Address;
+import com.sun.istack.NotNull;
 
 public class AddressForm {
 	
+	@NotNull
 	private String streetAddress;
 
+	@NotNull
 	private int houseNumber;
 
+	@NotNull
 	private String city;
 
+	@NotNull
 	private String state;
 
+	@NotNull
 	private String zipCode;
 	
+	@NotNull
 	private String country;
 
 	public AddressForm(Address address) {

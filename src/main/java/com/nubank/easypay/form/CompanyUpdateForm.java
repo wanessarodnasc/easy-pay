@@ -2,9 +2,11 @@ package com.nubank.easypay.form;
 
 import com.nubank.easypay.model.Address;
 import com.nubank.easypay.model.Company;
+import com.sun.istack.NotNull;
 
 public class CompanyUpdateForm {
 	
+	@NotNull
 	private String code;
 
 	private AddressForm address;

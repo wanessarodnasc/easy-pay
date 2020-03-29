@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.nubank.easypay.form.PaymentRequestForm;
 import com.nubank.easypay.service.client.ProcessPaymentClient;
 
 @Service
@@ -28,10 +29,9 @@ public class ProcessPaymentClientImp implements ProcessPaymentClient{
 	private String cpfVariable;
 
 	@Override
-	public String processPayment(String cpf) {
-		UriComponents uri = UriComponentsBuilder.fromUriString(url).queryParam(cpfVariable, cpf).build();
+	public String processPayment(PaymentRequestForm payment) {
+		UriComponents uri = UriComponentsBuilder.fromUriString(url).queryParam(cpfVariable, payment).build();
 		LOGGER.info(MessageFormat.format("Calling web service process payment: {0}", uri));
-		return restTemplate.getForObject(uri.toUriString(), String.class);
+		return restTemplate.postForEntity(uri.toUriString(), payment, String.class).getBody();
 	}
-
 }

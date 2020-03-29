@@ -15,7 +15,7 @@ public class AuthorizePaymentServiceTest {
 
 	@Test
 	public void autorizePayment() {
-		service.autorizePayment("", "");
+		service.autorizePayment(null);
 	}
 	
 }

@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "log_request")
 public class LogRequest implements Serializable {
@@ -20,26 +22,44 @@ public class LogRequest implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column(name = "custumer_cpf")
+	@Column(name = "custumer_cpf", nullable = false)
 	private String custumerCpf;
 	
-	@Column(name = "company_code")
+	@Column(name = "company_code" , nullable = false)
 	private String companyCode;
 	
-	@Column(name = "status", nullable = false)
+	@Column(name = "status")
 	private String status;
 	
-	@Column(name = "data_time", nullable = false)
-	private LocalDateTime dataTime;
-	
+	@DateTimeFormat
+	@Column(name = "data_time_start", nullable = false)
+	private LocalDateTime dataTimeStart;
+
+	@DateTimeFormat
+	@Column(name = "data_time_start_end")
+	private LocalDateTime dataTimeEnd;
+
 	public LogRequest() {
 	}
 	
-	public LogRequest(String custumerCpf, String companyCode, String status, LocalDateTime dataTime) {
+	public LogRequest(String custumerCpf, String companyCode, String status, LocalDateTime dataTimeStart,
+			LocalDateTime dataTimeEnd) {
 		this.custumerCpf = custumerCpf;
 		this.companyCode = companyCode;
 		this.status = status;
-		this.dataTime = dataTime;
+		this.dataTimeStart = dataTimeStart;
+		this.dataTimeEnd = dataTimeEnd;
+	}
+
+	public LogRequest(String custumerCpf, String companyCode, LocalDateTime dataTimeStart) {
+		this.custumerCpf = custumerCpf;
+		this.companyCode = companyCode;
+		this.dataTimeStart = dataTimeStart;
+	}
+
+	public LogRequest(String custumerCpf, String companyCode) {
+		this.custumerCpf = custumerCpf;
+		this.companyCode = companyCode;
 	}
 
 	public String getCustumerCpf() {
@@ -66,21 +86,27 @@ public class LogRequest implements Serializable {
 		this.status = status;
 	}
 
-	public LocalDateTime getDataTime() {
-		return dataTime;
+	public LocalDateTime getDataTimeStart() {
+		return dataTimeStart;
 	}
 
-	public void setDataTime(LocalDateTime dataTime) {
-		this.dataTime = dataTime;
+	public void setDataTimeStart(LocalDateTime dataTimeStart) {
+		this.dataTimeStart = dataTimeStart;
+	}
+
+	public LocalDateTime getDataTimeEnd() {
+		return dataTimeEnd;
+	}
+
+	public void setDataTimeEnd(LocalDateTime dataTimeEnd) {
+		this.dataTimeEnd = dataTimeEnd;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	@Override
-	public String toString() {
-		return "LogRequest [custumerCpf=" + custumerCpf + ", companyCode=" + companyCode + ", status=" + status
-				+ ", dataTime=" + dataTime + "]";
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

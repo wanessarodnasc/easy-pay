@@ -29,13 +29,13 @@ public class PartnerCompanyRegisterServiceTest {
 
 	@Test
 	public void registerNewCompany() throws Exception {
-		String msg = service.registerNewCompany(new CompanyInsertForm("00.000.000/0001-00", "Test 1", getAddress()));
+		String msg = service.registerNewCompany(new CompanyInsertForm("00.000.000/0001-00", "Test 1", "teste@gmail.com", getAddress()));
 		assertEquals(msg, RegisterEnum.SAVED.getDescription());
 	}
 	
 	@Test
 	public void registerUpdateCompany() throws Exception {
-		Company company = repository.save(new Company("00.000.000/0001-01", "Test 2", getAddress(), "teste:1234"));
+		Company company = repository.save(new Company("00.000.000/0001-01", "Test 2", "teste@gmail.com", getAddress(), "teste:1234"));
 		company.getAddress().setStreetAddress("New Address");
 		String msg = service.registerUpdateCompany(new CompanyUpdateForm(company));
 		assertEquals(msg, RegisterEnum.UPDATED.getDescription());
@@ -45,14 +45,14 @@ public class PartnerCompanyRegisterServiceTest {
 	
 	@Test
 	public void updateCredentials() throws Exception {
-		Company company = repository.save(new Company("00.000.000/0001-02", "Test 2", getAddress(), "teste:1234"));
+		Company company = repository.save(new Company("00.000.000/0001-02", "Test 2", "teste@gmail.com", getAddress(), "teste:1234"));
 		String msg = service.updateCredentials(company.getCode());
 		assertEquals(msg, RegisterEnum.SAVED.getDescription());
 	}
 	
 	@Test
 	public void deleteCompany() throws Exception {
-		Company company = repository.save(new Company("00.000.000/0001-03", "Test 3", getAddress(), "teste:1234"));
+		Company company = repository.save(new Company("00.000.000/0001-03", "Test 3", "teste@gmail.com", getAddress(), "teste:1234"));
 		String msg = service.deleteCompany(company.getCode());
 		assertEquals(msg, RegisterEnum.DELETED.getDescription());
 	}

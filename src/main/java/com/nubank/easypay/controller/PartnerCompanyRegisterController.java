@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,7 @@ public class PartnerCompanyRegisterController {
 	private PartnerCompanyRegisterService service;
 	
 	@PostMapping("register-new-company")
-	public ResponseEntity<String> registerNewCompany(@RequestBody @Valid CompanyInsertForm company) {
+	public ResponseEntity<String> registerNewCompany(@RequestBody @Valid CompanyInsertForm company) throws MethodArgumentNotValidException {
 		String accessData = service.registerNewCompany(company);
 		return ResponseEntity.ok(accessData);
 	}

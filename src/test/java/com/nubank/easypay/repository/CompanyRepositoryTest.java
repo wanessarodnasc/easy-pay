@@ -30,14 +30,14 @@ public class CompanyRepositoryTest {
 	
 	@Test
     public void findAll() {
-		Company company = new Company("Test", "Test", getAddress(), "teste:1234");
+		Company company = new Company("Test", "Test", "teste@gmail.com", getAddress(), "teste:1234");
         repository.save(company);
         assertNotNull(repository.findAll());
     }
 	
 	@Test
     public void findByCode() {
-		Company company = new Company("Test", "Test", getAddress(), "teste:1234");
+		Company company = new Company("Test", "Test", "teste@gmail.com", getAddress(), "teste:1234");
 		Optional<Company> companyFound = repository.findByCode(repository.save(company).getCode()) ;
         assertNotNull(companyFound.get());
     }

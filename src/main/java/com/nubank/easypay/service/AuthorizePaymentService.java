@@ -1,7 +1,9 @@
 package com.nubank.easypay.service;
 
+import com.nubank.easypay.form.PaymentForm;
+
 public interface AuthorizePaymentService {
 
-	String autorizePayment(String cpf, String companyCode);
+	String autorizePayment(PaymentForm payment);
 
 }

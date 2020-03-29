@@ -2,6 +2,7 @@ package com.nubank.easypay.service;
 
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,8 @@ public class LogRequestServiceTest {
 	private LogRequestRepository repository;
 	
 	@Test
-	public void registerNewCompany() throws Exception {
-		service.saveLogInformation("35177355221", "00.000.000/0001-00", "APPROVED");
+	public void saveLogInformation() throws Exception {
+		service.saveLogInformationStart(new LogRequest("35177355221", "00.000.000/0001-00", LocalDateTime.now()));
 		Optional<List<LogRequest>> log = repository.findByCustumerCpf("35177355221");
 		assertTrue(log.isPresent());
 	}

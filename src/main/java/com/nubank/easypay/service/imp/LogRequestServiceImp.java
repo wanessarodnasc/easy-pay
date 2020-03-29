@@ -16,7 +16,15 @@ public class LogRequestServiceImp implements LogRequestService {
 	private LogRequestRepository repository;
 
 	@Override
-	public void saveLogInformation(String custumerCpf, String companyCode, String status) {
-		repository.save(new LogRequest(custumerCpf, companyCode, status, LocalDateTime.now()));
+	public LogRequest saveLogInformationStart(LogRequest log) {
+		return repository.save(new LogRequest(log.getCustumerCpf(), log.getCompanyCode(), LocalDateTime.now()));
+	}
+
+	@Override
+	public LogRequest updateLogFinishProcess(LogRequest log, String status) {
+		log.setStatus(status);
+		log.setDataTimeEnd(LocalDateTime.now());
+		LogRequest logUpdated = repository.save(log);
+		return logUpdated;
 	}
 }
