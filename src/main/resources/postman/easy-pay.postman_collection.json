@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "529c74d3-640a-4f6f-b9e0-32d38cedb6ec",
+		"name": "easy-pay",
+		"description": "This project have the objective to call services on easy pay project to null bank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register Company",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"00.000.000/0001-00\",\r\n    \"name\": \"Cielo\",\r\n    \"email\": \"wanessanasccimento@gmail.com\",\r\n    \"address\": {\r\n        \"streetAddress\": \"Rua. Jose Silva\",\r\n        \"houseNumber\": 123,\r\n        \"city\": \"São Paulo\",\r\n        \"state\": \"São Paulo\",\r\n        \"zipCode\": \"06526-041\",\r\n        \"country\": \"Brasil\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/register-new-company/",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"register-new-company",
+						""
+					]
+				},
+				"description": "This serivce is to register new partner comapnies "
+			},
+			"response": []
+		},
+		{
+			"name": "Update Credential",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/register-update-credentials?companyCode=00.000.000/0001-00",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"register-update-credentials"
+					],
+					"query": [
+						{
+							"key": "companyCode",
+							"value": "00.000.000/0001-00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update company",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"00.000.000/0001-00\",\r\n    \"address\": {\r\n        \"streetAddress\": \"Rua. Jose Silva\",\r\n        \"houseNumber\": 1234,\r\n        \"city\": \"São Paulo\",\r\n        \"state\": \"São Paulo\",\r\n        \"zipCode\": \"06526-041\",\r\n        \"country\": \"Brasil\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/register-update-company",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"register-update-company"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Company",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "companyCode",
+						"value": "00.000.000/0001-00",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9090/register-delete-company?companyCode=00.000.000/0001-00",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"register-delete-company"
+					],
+					"query": [
+						{
+							"key": "companyCode",
+							"value": "00.000.000/0001-00"
+						}
+					]
+				},
+				"description": "This fuction does not delete the company data just change the status to inactive"
+			},
+			"response": []
+		},
+		{
+			"name": "Authorize Payment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"cpf\": \"35177355221\",\n\t\"completeName\":\"Tet payment\",\n\t\"companyCode\": \"00.000.000/0001-00\",\n    \"value\": 123.00,\n    \"installment\": 1 \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/authorize-payment",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"authorize-payment"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
