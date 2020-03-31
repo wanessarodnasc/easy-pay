@@ -50,8 +50,7 @@ public class ErrorValidationHandler {
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		for(FieldError fildError : fieldErrors) {
 			String mensagem = messageSource.getMessage(fildError, LocaleContextHolder.getLocale());
-			ExceptionFormDto erro = new ExceptionFormDto(fildError.getField(), mensagem);
-			dto.add(erro);
+			dto.add(new ExceptionFormDto(fildError.getField(), mensagem));
 		}
 		return dto;
 	}

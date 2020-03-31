@@ -20,6 +20,14 @@ public class PaymentForm {
 
 	private int installment;
 
+	public PaymentForm(String cpf, String completeName, String companyCode, BigDecimal value, int installment) {
+		this.cpf = cpf;
+		this.companyCode = completeName;
+		this.companyCode = companyCode;
+		this.value = value;
+		this.installment = installment;
+	}
+
 	public String getCpf() {
 		return cpf;
 	}

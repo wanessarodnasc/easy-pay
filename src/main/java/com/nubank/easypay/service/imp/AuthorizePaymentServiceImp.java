@@ -56,8 +56,8 @@ public class AuthorizePaymentServiceImp implements AuthorizePaymentService{
 	}
 
 	private String processPayment(Custumer custumer, PaymentForm payment) {
-		PaymentRequestForm form = createPaymentRequestForm(custumer, payment);
 		try {
+			PaymentRequestForm form = createPaymentRequestForm(custumer, payment);
 			return processPayment.processPayment(form);
 		} catch (Exception e) {
 			return AuthorizePaymentEnum.PROCESSING_ERROR.getDescription();

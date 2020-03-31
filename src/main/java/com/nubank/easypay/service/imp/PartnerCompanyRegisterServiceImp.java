@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nubank.easypay.enumeration.RegisterEnum;
+import com.nubank.easypay.exception.BussinessException;
 import com.nubank.easypay.form.CompanyInsertForm;
 import com.nubank.easypay.form.CompanyUpdateForm;
 import com.nubank.easypay.model.AccessData;
@@ -25,12 +26,16 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 
 	@Override
 	public String registerNewCompany(CompanyInsertForm company) {
-		Optional<Company> companyExist = companyRepository.findByCode(company.getCode());
-		if (companyExist.isPresent()) {
-			return RegisterEnum.DUPLICATED.getDescription();
+		try {
+			Optional<Company> companyExist = companyRepository.findByCode(company.getCode());
+			if (companyExist.isPresent()) {
+				return RegisterEnum.DUPLICATED.getDescription();
+			}
+			AccessData accessData = generateCredentials.generateAccessCredentials(company.getCode());
+			return saveCompany(new Company(company), accessData);
+		} catch (Exception e) {
+			return RegisterEnum.SAVE_UPDATE_ERROR.getDescription();
 		}
-		AccessData accessData = generateCredentials.generateAccessCredentials(company.getCode());
-		return saveCompany(new Company(company), accessData);
 	}
 
 	@Override
@@ -41,14 +46,11 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 	}
 
 	@Override
-	public String registerUpdateCompany(CompanyUpdateForm company) {
+	public String registerUpdateCompany(CompanyUpdateForm companyForm) {
 		try {
-			Optional<Company> companyExist = companyRepository.findByCode(company.getCode());
-			if (!companyExist.isPresent()) {
-				return RegisterEnum.DOES_NOT_FOUND.getDescription();
-			}
-			companyExist.get().setAddress(new Address(company.getAddress()));
-			companyRepository.save(companyExist.get());
+			Company company = getCompany(companyForm.getCode());
+			company.setAddress(new Address(companyForm.getAddress()));
+			companyRepository.save(company);
 			return RegisterEnum.UPDATED.getDescription();
 		} catch (Exception e) {
 			return RegisterEnum.SAVE_UPDATE_ERROR.getDescription();
@@ -58,19 +60,15 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 	@Override
 	public String deleteCompany(String companyCode) {
 		try {
-			Optional<Company> company = companyRepository.findByCode(companyCode);
-
-			if (!company.isPresent()) {
-				return RegisterEnum.DOES_NOT_FOUND.getDescription();
-			}
-			company.get().setStatus(false);
-			companyRepository.saveAndFlush(company.get());
-			return RegisterEnum.DELETED.getDescription();
-
+			Company company = getCompany(companyCode);
+			company.setStatus(false);
+			companyRepository.saveAndFlush(company);
 		} catch (Exception e) {
 			return RegisterEnum.DOES_NOT_FOUND.getDescription();
 		}
+		return RegisterEnum.DELETED.getDescription();
 	}
+
 
 	private String saveCompany(Company company, AccessData accessData) {
 		try {
@@ -84,5 +82,13 @@ public class PartnerCompanyRegisterServiceImp implements PartnerCompanyRegisterS
 			return RegisterEnum.SAVE_UPDATE_ERROR.getDescription();
 		}
 		return RegisterEnum.SAVED.getDescription();
+	}
+
+	private Company getCompany(String companyCode) throws BussinessException {
+		Optional<Company> company = companyRepository.findByCode(companyCode);
+		if (!company.isPresent()) {
+			throw new BussinessException(RegisterEnum.DOES_NOT_FOUND.getDescription());
+		}
+		return company.get();
 	}
 }
