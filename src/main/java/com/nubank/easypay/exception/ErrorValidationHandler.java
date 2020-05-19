@@ -48,10 +48,12 @@ public class ErrorValidationHandler {
 	private List<ExceptionFormDto> getErrorDetail(MethodArgumentNotValidException exception) {
 		List<ExceptionFormDto> dto = new ArrayList<>();
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-		for(FieldError fildError : fieldErrors) {
-			String mensagem = messageSource.getMessage(fildError, LocaleContextHolder.getLocale());
-			dto.add(new ExceptionFormDto(fildError.getField(), mensagem));
-		}
+		
+		fieldErrors.stream().forEach(fielErrorItem -> {
+			String mensagem = messageSource.getMessage(fielErrorItem, LocaleContextHolder.getLocale());
+			dto.add(new ExceptionFormDto(fielErrorItem.getField(), mensagem));
+		});
+
 		return dto;
 	}
 }
